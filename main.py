@@ -1,6 +1,8 @@
 import config
 import openai
 
+openai.api_key = config.api_key
+
 f=open("file.mp3",'rb')
 transcript=openai.Audio.translate("whisper-1",f)
 print(transcript)
