@@ -7,6 +7,7 @@ import time
 
 import pregunta
 import servo
+import pantalla
 
 # Configuración de la grabación de audio
 FORMAT = pyaudio.paInt16
@@ -16,8 +17,8 @@ CHUNK = 1024
 WAVE_OUTPUT_FILENAME = "file.wav"
 
 # Configuración del botón y el LED
-BUTTON_PIN = 23
-LED_PIN = 18
+BUTTON_PIN = 5
+LED_PIN = 6
 
 # Inicialización de PyAudio
 audio = pyaudio.PyAudio()
@@ -85,27 +86,30 @@ def grabar_audio():
     else:
         angulo=90
     
-    return angulo
+    return angulo,completion,question
 
 
+pantalla= pantalla.Pantalla()
 
 # Configuración de la interrupción del botón
 GPIO.add_event_detect(BUTTON_PIN, GPIO.FALLING, callback=grabar_audio, bouncetime=300)
 
 # definir servo
-s=servo.def_servo()
+s=servo.Servo(18)
 
 # Ciclo principal del programa
 while True:
     if GPIO.input(BUTTON_PIN) == GPIO.LOW:
         time.sleep(0.1) # debounce
         if GPIO.input(BUTTON_PIN) == GPIO.LOW:
-            angulo=grabar_audio()
+            angulo,completion,question=grabar_audio()
             print('angulo: ',angulo)
-            servo.move_to(s,angulo)
+            pantalla.show(completion)
+            s.move_to(angulo)
         else:
             set_led(False)
     else:
         set_led(False)
         print('esperando...',end='\r')
+        pantalla.show("esperando...")
         time.sleep(0.1) # debounce
