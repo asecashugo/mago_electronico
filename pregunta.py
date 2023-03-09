@@ -65,18 +65,20 @@ def enviar_pregunta():
   openai.api_key = config.api_key
 
   f=open("file.mp3",'rb')
-  transcript=openai.Audio.translate("whisper-1",f)
+  transcript=openai.Audio.transcribe("whisper-1",f,response_format='verbose_json')
   print(transcript)
 
-  question=transcript
+  question=transcript.text
+  language=transcript.language
 
-  completion=openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": f"Answer in json format answer: yes/no/I don't know, level_of_confidence: from 0 to 100 and a short_answer: in <100 characters to the following question:{question}"}])
-  print(completion.choices[0].message.content)
+  raw_answer=openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": f"Answer in json format answer: yes/no/I don't know, level_of_confidence: from 0 to 100 and a short_answer: in <100 characters in {language} to the following question:{question}"}])
+  print(raw_answer.choices[0].message.content)
 
   # decodificar completion.choices[0].message.content (json) y extraer campo answer
-  completion=completion.choices[0].message.content
-  completion=completion[completion.find("answer")+9:completion.find("level_of_confidence")-3]
-  print(completion)
+  raw_answer=raw_answer.choices[0].message.content
+  completion=raw_answer[raw_answer.find("answer")+9:raw_answer.find("level_of_confidence")-3]
+  short_answer=raw_answer[raw_answer.find("short_answer")+14:raw_answer.find("}")-1]
+  print(raw_answer)
 
-  return completion,question
+  return completion,short_answer,language
 

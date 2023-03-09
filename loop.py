@@ -72,7 +72,7 @@ def grabar_audio():
 
     print("El archivo de audio ha sido guardado en formato MP3.")
 
-    completion,question= pregunta.enviar_pregunta()
+    completion,short_answer,language= pregunta.enviar_pregunta()
     print('completion: ',completion)
 
     # tranform completion to lowercase
@@ -82,11 +82,12 @@ def grabar_audio():
     if 'yes' in completion:
         angulo=180
     elif 'no' in completion:
+
         angulo=0
     else:
         angulo=90
     
-    return angulo,completion,question
+    return angulo,completion,short_answer
 
 
 pantalla= pantalla.Pantalla()
@@ -98,18 +99,20 @@ GPIO.add_event_detect(BUTTON_PIN, GPIO.FALLING, callback=grabar_audio, bouncetim
 s=servo.Servo(18)
 
 # Ciclo principal del programa
+print('esperando primera pregunta...',end='\r')
+pantalla.show("esperando primera pregunta...")
 while True:
     if GPIO.input(BUTTON_PIN) == GPIO.LOW:
-        time.sleep(0.1) # debounce
+        time.sleep(0.01) # debounce
         if GPIO.input(BUTTON_PIN) == GPIO.LOW:
-            angulo,completion,question=grabar_audio()
+            pantalla.show('escuchando...')
+            angulo,completion,short_answer=grabar_audio()
             print('angulo: ',angulo)
-            pantalla.show(completion)
+            pantalla.show(short_answer)
             s.move_to(angulo)
+
         else:
             set_led(False)
     else:
         set_led(False)
-        print('esperando...',end='\r')
-        pantalla.show("esperando...")
         time.sleep(0.1) # debounce

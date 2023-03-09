@@ -26,7 +26,7 @@ class Servo():
       else:
         self.duty_cycle-=self.speed
         self.p.ChangeDutyCycle(self.duty_cycle)
-      print('going to '+str(target_angle_deg)+' degrees, duty cycle: '+str(target_duty_cycle))
+      # print('going to '+str(target_angle_deg)+' degrees, duty cycle: '+str(target_duty_cycle))
       time.sleep(0.01)
     # self.p.ChangeDutyCycle(target_duty_cycle)
     time.sleep(1)

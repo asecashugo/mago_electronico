@@ -21,19 +21,19 @@ class Pantalla():
         self.epd = epd1in54_V2.EPD()
         logging.info("epd1in54_V2 screen initialized")
         self.epd.init(0)
-        self.epd.Clear(0xFF)
+        # self.epd.Clear(0xFF)
         self.Font = ImageFont.truetype(os.path.join(thisdir, 'arial.ttf'), 24)
-        time.sleep(1)
+        # time.sleep(1)
     def show(self, text):
         # split text in strings of max 16 characters
         # and put them in a list
-        text_list = [text[i:i+16] for i in range(0, len(text), 16)]
+        text_list = [text[i:i+17] for i in range(0, len(text), 16)]
         logging.info("1.Drawing on the image...")
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
         self.draw = ImageDraw.Draw(image)
-        y=12
+        y=8
         for line in text_list:
-            self.draw.text((8, y), line, font = self.Font, fill = 0)
+            self.draw.text((4, y), line, font = self.Font, fill = 0)
             y+=24
         # self.draw.rectangle((0, 10, 200, 34), fill = 0)
         # self.draw.text((8, 12), 'hello world', font = self.Font, fill = 255)
