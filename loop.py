@@ -33,13 +33,15 @@ def set_led(state):
     GPIO.output(LED_PIN, state)
 
 # Función para grabar audio
-def grabar_audio():
+def grabar_audio(pantalla):
+    
     # Apertura del stream de audio
     stream = audio.open(format=FORMAT, channels=CHANNELS,
                         rate=RATE, input=True,
                         frames_per_buffer=CHUNK)
 
     print("Grabando...")
+    pantalla.show('Grabando...')
 
     # Lectura de los datos de audio mientras el botón esté presionado
     frames = []
@@ -72,8 +74,11 @@ def grabar_audio():
 
     print("El archivo de audio ha sido guardado en formato MP3.")
 
+    # Mostrar 'Pensando' por pantalla
+    pantalla.show('Pensando...')
+
     completion,short_answer,language= pregunta.enviar_pregunta()
-    print('completion: ',completion)
+
 
     # tranform completion to lowercase
     completion=completion.lower()
@@ -87,29 +92,41 @@ def grabar_audio():
     else:
         angulo=90
     
+    # strip double quotes from completion and short_answer
+    import re
+    completion=re.sub('"','',completion)
+    short_answer=re.sub('"','',short_answer)
+    # remove possible commas at end of string
+    completion=completion.rstrip(',')
+    short_answer=short_answer.rstrip(',')
+    print('completion: ',completion)
+    print('short_answer: ',short_answer)
+
     return angulo,completion,short_answer
 
 
-pantalla= pantalla.Pantalla()
+pantallita= pantalla.Pantalla()
 
-# Configuración de la interrupción del botón
-GPIO.add_event_detect(BUTTON_PIN, GPIO.FALLING, callback=grabar_audio, bouncetime=300)
+# # Configuración de la interrupción del botón
+# GPIO.add_event_detect(BUTTON_PIN, GPIO.FALLING, callback=grabar_audio, bouncetime=300)
 
 # definir servo
 s=servo.Servo(18)
 
 # Ciclo principal del programa
 print('esperando primera pregunta...',end='\r')
-pantalla.show("esperando primera pregunta...")
+pantallita.show("esperando primera pregunta...")
 while True:
     if GPIO.input(BUTTON_PIN) == GPIO.LOW:
         time.sleep(0.01) # debounce
         if GPIO.input(BUTTON_PIN) == GPIO.LOW:
-            pantalla.show('escuchando...')
-            angulo,completion,short_answer=grabar_audio()
+            angulo,completion,short_answer=grabar_audio(pantallita)
             print('angulo: ',angulo)
-            pantalla.show(short_answer)
+            pantallita.show(short_answer)
             s.move_to(angulo)
+            # restaurar audio 
+            # Inicialización de PyAudio
+            audio = pyaudio.PyAudio()
 
         else:
             set_led(False)
