@@ -5,8 +5,14 @@ It would suddenly spin and point at the right answer without hesitation ([see it
 ![image](https://github.com/user-attachments/assets/df2ae795-7fbf-4cd8-bbab-7d2661dafa27)
 
 
-Anyways, we outgrew it long ago. Still loved he game for its ingenuity and wanted to honor it with a retrofit. So here's what I did:
+Anyways, we outgrew it long ago. Still loved he game for its ingenuity and wanted to honor it with a retrofit. I saw this post by OpenAI and it gave me an idea...
 
+![image](https://github.com/user-attachments/assets/25f5afa5-400e-4e58-b33a-9bc08ace62d3)
+![image](https://github.com/user-attachments/assets/da398c51-f94d-4a82-bdaa-9df2ce4eca35)
+
+
+
+So here's what I did:
 I replaced the box for a smaller, deeper one, enough to house a servo coupled with a bunch of magnets
 
 ![image](https://github.com/user-attachments/assets/f511cc43-9db4-4718-b899-452bf2843b60)
