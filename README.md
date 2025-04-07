@@ -2,8 +2,8 @@
 
 ### Context:
 
-I used to play this game that my grandma gave me when I was a kid. My brother and I learnt to read with the questions on the board. We would point the robot at a question, read it out loud, wonder for a while and then transfer it to the second stand. 
-It would suddenly spin and point at the right answer without hesitation ([see it in action](https://www.youtube.com/watch?v=QE0VkjnnxO4)) Magic! It may look naîve today, but it was brilliant at the time.
+I used to play this 80s game that my grandma gave me when I was a kid. My brother and I learnt to read with the questions on the board. We would point the robot at a question, read it out loud, wonder for a while and then transfer it to the second stand. 
+It would suddenly spin and point at the right answer without hesitation ([see it in action](https://www.youtube.com/watch?v=QE0VkjnnxO4)) Magic! It may look naïve today, but it was brilliant at the time. It had an effect on people like talking to chatGPT for the first time.
 ![image](https://github.com/user-attachments/assets/4f07182b-2387-4238-b37f-2104f9822e7b)
 
 ![image](https://github.com/user-attachments/assets/df2ae795-7fbf-4cd8-bbab-7d2661dafa27)
